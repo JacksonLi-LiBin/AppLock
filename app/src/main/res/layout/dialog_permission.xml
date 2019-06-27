@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/white"
               android:orientation="vertical"
               android:paddingLeft="16dp"
               android:paddingRight="16dp">
@@ -18,12 +19,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="你的系统大于等于5.0，我们需要获取 查看应用使用情况 权限"/>
+        android:text="@string/dialog_tip"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_per_one"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_per_two"/>
 
     <TextView
         android:id="@+id/btn_permission"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"

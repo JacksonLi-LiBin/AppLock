@@ -1,6 +1,7 @@
 package com.lzx.lock.utils;
 
 import android.app.AppOpsManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -18,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -60,10 +62,35 @@ public class LockUtil {
      * @return
      */
     public static boolean isNoOption(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            PackageManager packageManager = context.getPackageManager();
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            return list.size() > 0;
+        }
+        return false;
+    }
+
+    /**
+     * 是否有开启通知栏服务
+     */
+    private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
+
+    public static boolean isNotificationSettingOn(Context mContext) {
+        String pkgName = mContext.getPackageName();
+        final String flat = Settings.Secure.getString(mContext.getContentResolver(), ENABLED_NOTIFICATION_LISTENERS);
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            for (int i = 0; i < names.length; i++) {
+                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable, RelativeLayout mUnLockLayout) {

@@ -8,16 +8,24 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
 
     <application
-        android:name=".LockApp"
+        android:name=".LockApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:manageSpaceActivity=".module.splash.SplashActivity"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".module.splash.SplashActivity"
             android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
@@ -26,21 +34,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.FirstMainActivity"
-            android:label="应用锁"
-            android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activity.CreatePwdActivity"
+            android:name=".module.pwd.CreatePwdActivity"
             android:label="创建密码"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.unlock.GestureSelfUnlockActivity"
+            android:name=".module.lock.GestureSelfUnlockActivity"
             android:label="解锁"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.unlock.GestureUnlockActivity"
+            android:name=".module.lock.GestureUnlockActivity"
             android:excludeFromRecents="true"
             android:label=""
             android:launchMode="singleTask"
@@ -48,40 +52,30 @@
             android:screenOrientation="portrait"
             android:theme="@style/unlock_activity_style"/>
         <activity
-            android:name=".activity.LockMainActivity"
-            android:label="应用锁"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.LockSettingActivity"
+            android:name=".module.setting.LockSettingActivity"
             android:label="设置"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.unlock.NumberSelfUnlockActivity"
-            android:label="解锁"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.unlock.NumberUnlockActivity"
-            android:excludeFromRecents="true"
-            android:label=""
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/unlock_activity_style"/>
-        <activity
-            android:name=".activity.lock.GestureCreateActivity"
+            android:name=".module.lock.GestureCreateActivity"
             android:label="创建图案锁"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.lock.NumberCreateActivity"
-            android:label="创建数字"
+            android:name=".module.about.AboutMeActivity"
+            android:label="关于我"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.AboutMeActivity"
-            android:label="关于我"
+            android:name=".module.main.MainActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name=".service.LoadAppListService"/>
         <service android:name=".service.LockService"/>
+
+        <receiver android:name=".receiver.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
